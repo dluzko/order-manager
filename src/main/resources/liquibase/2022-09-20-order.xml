@@ -21,7 +21,7 @@
             <column name="address" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="comment" type="VARCHAR(255)">
+            <column name="status" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
         </createTable>

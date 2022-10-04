@@ -1,5 +1,5 @@
 package com.luzko.order.model;
 
 public enum BlockingReason {
-    DAMAGE, ORDER, SPOIL
+    DAMAGE, ORDER, SPOILAGE
 }

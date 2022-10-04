@@ -20,19 +20,16 @@ public class ClientsConfig {
     private final RestTemplateBuilder restTemplateBuilder;
 
     @Bean
-    public RestTemplate warehouseManagerRestTemplate(final ClientSettingsProperties masterDataClientSettingsProperties) {
-        return createRestTemplate(masterDataClientSettingsProperties);
-    }
-
-    @Bean
     @ConfigurationProperties(prefix = "clients.settings.warehouse-manager")
     public ClientSettingsProperties warehouseManagerClientSettingsProperties() {
         return new ClientSettingsProperties();
     }
 
-    private RestTemplate createRestTemplate(final ClientSettingsProperties clientSettingsProperties) {
+    @Bean
+    public RestTemplate warehouseManagerRestTemplate(
+            final ClientSettingsProperties warehouseManagerClientSettingsProperties) {
         CloseableHttpClient httpClient = HttpClientBuilder.create()
-                .setConnectionManager(clientSettingsProperties.getConnectionManager())
+                .setConnectionManager(warehouseManagerClientSettingsProperties.getConnectionManager())
                 .build();
 
         ClientHttpRequestFactory requestFactory =
@@ -40,9 +37,9 @@ public class ClientsConfig {
 
         return restTemplateBuilder
                 .requestFactory(() -> requestFactory)
-                .rootUri(clientSettingsProperties.getRootUri())
-                .setConnectTimeout(clientSettingsProperties.getConnectionTimeout())
-                .setReadTimeout(clientSettingsProperties.getReadTimeout())
+                .rootUri(warehouseManagerClientSettingsProperties.getRootUri())
+                .setConnectTimeout(warehouseManagerClientSettingsProperties.getConnectionTimeout())
+                .setReadTimeout(warehouseManagerClientSettingsProperties.getReadTimeout())
                 .errorHandler(clientErrorHandler)
                 .build();
     }

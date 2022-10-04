@@ -1,6 +1,8 @@
 package com.luzko.order.service.client;
 
-import com.luzko.order.dto.BlockProductRequestDto;
+import com.luzko.order.dto.BlockingRequestDto;
+import com.luzko.order.service.exception.ErrorCode;
+import com.luzko.order.service.exception.OrderManagerException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -18,42 +20,54 @@ public class WarehouseManagerClient {
 
     private final RestTemplate warehouseManagerClientSettingsProperties;
 
-    public void callBlockProducts(final List<BlockProductRequestDto> blockProductRequestDtos) {
-        if (blockProductRequestDtos.isEmpty()) {
+    public void callBlockProducts(final List<BlockingRequestDto> blockingRequestDtos) {
+        if (blockingRequestDtos.isEmpty()) {
             return;
         }
-        warehouseManagerClientSettingsProperties.exchange(
-                "/products/block",
-                HttpMethod.POST,
-                new HttpEntity<>(blockProductRequestDtos),
-                new ParameterizedTypeReference<>() {
-                }
-        );
+        try {
+            warehouseManagerClientSettingsProperties.exchange(
+                    "/products/block",
+                    HttpMethod.POST,
+                    new HttpEntity<>(blockingRequestDtos),
+                    new ParameterizedTypeReference<>() {
+                    }
+            );
+        } catch (Exception ex) {
+            throw new OrderManagerException(ErrorCode.WAREHOUSE_MANAGER_ERROR, ex.toString());
+        }
     }
 
-    public void callUnblockProducts(final List<BlockProductRequestDto> unblockProductRequestDtos) {
-        if (unblockProductRequestDtos.isEmpty()) {
+    public void callUnblockProducts(final List<BlockingRequestDto> unblockingRequestDtos) {
+        if (unblockingRequestDtos.isEmpty()) {
             return;
         }
-        warehouseManagerClientSettingsProperties.exchange(
-                "/products/unblock",
-                HttpMethod.POST,
-                new HttpEntity<>(unblockProductRequestDtos),
-                new ParameterizedTypeReference<>() {
-                }
-        );
+        try {
+            warehouseManagerClientSettingsProperties.exchange(
+                    "/products/unblock",
+                    HttpMethod.POST,
+                    new HttpEntity<>(unblockingRequestDtos),
+                    new ParameterizedTypeReference<>() {
+                    }
+            );
+        } catch (Exception ex) {
+            throw new OrderManagerException(ErrorCode.WAREHOUSE_MANAGER_ERROR, ex.toString());
+        }
     }
 
-    public void callDepartProducts(final List<BlockProductRequestDto> departProductRequestDtos) {
-        if (departProductRequestDtos.isEmpty()) {
+    public void callDepartProducts(final List<BlockingRequestDto> departingRequestDtos) {
+        if (departingRequestDtos.isEmpty()) {
             return;
         }
-        warehouseManagerClientSettingsProperties.exchange(
-                "/products/depart",
-                HttpMethod.POST,
-                new HttpEntity<>(departProductRequestDtos),
-                new ParameterizedTypeReference<>() {
-                }
-        );
+        try {
+            warehouseManagerClientSettingsProperties.exchange(
+                    "/products/depart",
+                    HttpMethod.POST,
+                    new HttpEntity<>(departingRequestDtos),
+                    new ParameterizedTypeReference<>() {
+                    }
+            );
+        } catch (Exception ex) {
+            throw new OrderManagerException(ErrorCode.WAREHOUSE_MANAGER_ERROR, ex.toString());
+        }
     }
 }

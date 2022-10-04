@@ -14,23 +14,6 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:liquibase/db.changelog-master.xml
-  cloud:
-    stream:
-      bindings:
-        stock-out-0:
-          destination: test_1pc_be
-      kafka:
-        binder:
-          transaction:
-            producer:
-              configuration:
-                enable.idempotence: true
-                acks: all
-            transaction-id-prefix: tx-
-  kafka:
-    producer:
-      bootstrap-servers: localhost:9092
-      security.protocol: PLAINTEXT
 management:
   endpoints:
     web:
@@ -40,8 +23,8 @@ clients:
   settings:
     warehouse-manager:
      root-uri: http://localhost:10000
-     connection timeout: 5s
+     connection-timeout: 5s
      read-timeout: 10s
-     connection manager:
-       default max per route: 50
-       max total: 50
+     connection-manager:
+       default-max-per-route: 50
+       max-total: 50

@@ -25,8 +25,7 @@ public class OrderController {
     }
 
     @PostMapping("/orders")
-    public ResponseEntity<OrderResponseDto> placeOrder(
-            @Valid @RequestBody OrderRequestDto orderRequestDto) {
+    public ResponseEntity<OrderResponseDto> placeOrder(@Valid @RequestBody OrderRequestDto orderRequestDto) {
         final var response = orderService.createOrder(orderRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -34,12 +33,12 @@ public class OrderController {
     @PostMapping("/orders/{id}/cancel")
     public ResponseEntity<OrderResponseDto> cancelOrder(@PathVariable("id") Long id) {
         final var response = orderService.cancelOrder(id);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/orders/{id}/depart")
     public ResponseEntity<OrderResponseDto> departOrder(@PathVariable("id") Long id) {
         final var response = orderService.departOrder(id);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

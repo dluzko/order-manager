@@ -32,15 +32,13 @@ public class ClientErrorHandler extends DefaultResponseErrorHandler {
     public void handleError(ClientHttpResponse response) throws IOException {
         ClientErrorContextEntry clientErrorContextEntry;
         if ((clientErrorContextEntry = getClientErrorContextEntry(response)) != null) {
-            throw new ProductRestClientException(clientErrorContextEntry.getCode(), clientErrorContextEntry.getMessage());
+            throw new ProductRestClientException(
+                    clientErrorContextEntry.getCode(), clientErrorContextEntry.getMessage());
         } else {
             super.handleError(response);
         }
     }
 
-    /**
-     * Returns client error entry with code and message if existed.
-     */
     private ClientErrorContextEntry getClientErrorContextEntry(final ClientHttpResponse response) {
         try {
             ClientErrorContextEntry clientErrorContextEntry = null;

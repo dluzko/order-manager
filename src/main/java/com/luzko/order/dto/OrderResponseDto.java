@@ -1,8 +1,10 @@
 package com.luzko.order.dto;
 
+import com.luzko.order.model.OrderStatus;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.persistence.Enumerated;
 import java.math.BigDecimal;
 
 @Data
@@ -13,5 +15,6 @@ public class OrderResponseDto {
     private String productCode;
     private BigDecimal quantity;
     private String address;
-    private String comment;
+    @Enumerated
+    private OrderStatus status;
 }
